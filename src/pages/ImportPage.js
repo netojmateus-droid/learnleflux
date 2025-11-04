@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const ImportPage = () => {
   const [activeTab, setActiveTab] = useState('paste'); // 'paste', 'upload', 'link'
@@ -78,5 +79,11 @@ const TabButton = ({ label, isActive, onClick }) => (
     {label}
   </button>
 );
+
+TabButton.propTypes = {
+  label: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 export default ImportPage;
