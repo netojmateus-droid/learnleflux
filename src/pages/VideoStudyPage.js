@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 
 const VideoStudyPage = () => {
   // Example YouTube URL - this would come from the global state
