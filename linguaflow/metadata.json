@@ -1,0 +1,7 @@
+{
+  "name": "LinguaFlow",
+  "description": "An offline-first PWA for language learning through comprehensible input, with a neuro-focused zen design. Import texts, read, save vocabulary, and review with spaced repetition, all for free and without any paid services.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
