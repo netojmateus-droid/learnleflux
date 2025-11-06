@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, rgba(17, 24, 39, 0.5), rgba(11, 15, 20, 0.9));
+    background-color: #0B0F14;
+    color: #E5E7EB;
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: linear-gradient(180deg, #0B0F14 0%, #111827 100%);
+  }
+
+  body[data-theme='light'] {
+    background: linear-gradient(180deg, #F7F8FB 0%, #F1F5F9 100%);
+    color: #1E293B;
+  }
+}
+
+@layer components {
+  .surface-glass {
+    @apply rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 shadow-soft;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    @apply animate-fade-in;
+  }
+}

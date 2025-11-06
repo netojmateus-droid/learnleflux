@@ -1,0 +1,15 @@
+export const translations = {
+  welcome: "Welcome to LeFlux!",
+  selectLanguage: "Select your language",
+  startLearning: "Start Learning",
+  lessons: "Lessons",
+  library: "Library",
+  settings: "Settings",
+  offlineMessage: "You are currently offline. Please check your internet connection.",
+  lessonDetail: "Lesson Detail",
+  quiz: "Quiz",
+  flashcard: "Flashcard",
+  pronunciation: "Pronunciation",
+  progress: "Progress",
+  footerText: "© 2023 LeFlux. All rights reserved.",
+};
