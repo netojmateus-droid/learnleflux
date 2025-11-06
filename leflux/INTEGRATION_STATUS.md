@@ -16,17 +16,31 @@
 ### 3. Assistência de Estudo
 - [x] Hook `usePollinationsChat` para multi-turn conversations
 - [x] Componente `StudyAssistant` flutuante
-- [x] Integração na Home.tsx
+- [x] Integração na Reader page
+- [x] Integração na Vocabulary page
 - [x] Suporte a cancelamento de requisições
 - [x] Tratamento robusto de erros
 
-### 4. PWA & Cache
+### 4. Geração de Histórias
+- [x] Componente `StoryGenerator` para criação de histórias personalizadas
+- [x] Integração na página Texts
+- [x] Suporte a temas customizados
+- [x] Geração baseada em vocabulário do usuário
+
+### 5. Reconhecimento de Voz
+- [x] Hook `useVoiceRecognition` para captura de voz
+- [x] Componente `VoiceQuiz` para quizzes interativos
+- [x] Integração no `ReviewCard` para prática com voz
+- [x] Suporte a múltiplos idiomas (pt-BR, es-ES, en-US)
+- [x] Feedback visual durante gravação
+
+### 6. PWA & Cache
 - [x] Cache strategy para Pollinations images (14 dias)
 - [x] Cache strategy para Jina proxy (1 dia)
 - [x] Offline fallback habilitado
 - [x] Alias adicionado para `@/hooks`
 
-### 5. Documentação
+### 7. Documentação
 - [x] POLLINATIONS_INTEGRATION.md com exemplos
 - [x] Comentários em código
 - [x] Tipos TypeScript bem definidos
@@ -42,7 +56,14 @@
    />
    ```
 
-2. **Geração de Exercícios**
+2. **Prática com Reconhecimento de Voz**
+   ```tsx
+   // Já integrado no ReviewCard
+   // O usuário pode falar suas respostas durante revisão
+   // Funciona automaticamente com detecção de idioma
+   ```
+
+3. **Geração de Exercícios**
    ```typescript
    const exercise = await generatePollinationsText(
      'Create 5 vocabulary exercises about animals in Portuguese',
@@ -50,13 +71,20 @@
    );
    ```
 
-3. **Capturas de Texto**
+4. **Criação de Histórias Personalizadas**
+   ```typescript
+   // Disponível na página Texts
+   // Gera histórias baseadas em vocabulário do usuário
+   // Suporte a temas customizados
+   ```
+
+5. **Capturas de Texto**
    ```typescript
    const { body } = await fetchWithFallback('https://artigo.com');
    // Automático: tenta CORS, fallback para Jina
    ```
 
-4. **Imagens Inteligentes**
+6. **Imagens Inteligentes**
    ```typescript
    const cover = await fetchImageForTerm('Café em São Paulo');
    // Automático: tenta Pollinations, depois Pexels, Pixabay, Giphy, Unsplash
@@ -65,39 +93,50 @@
 ## 📋 Arquivos Modificados
 
 - ✅ `src/hooks/usePollinationsChat.ts` (novo)
+- ✅ `src/hooks/useVoiceRecognition.ts` (novo)
 - ✅ `src/components/common/StudyAssistant.tsx` (novo)
-- ✅ `src/pages/Home.tsx` (integrado assistente)
+- ✅ `src/components/common/StoryGenerator.tsx` (novo)
+- ✅ `src/components/common/VoiceQuiz.tsx` (novo)
+- ✅ `src/components/word/ReviewCard.tsx` (integrado reconhecimento de voz)
+- ✅ `src/pages/Reader/index.tsx` (integrado assistente)
+- ✅ `src/pages/Vocabulary/index.tsx` (integrado assistente)
+- ✅ `src/pages/Texts/index.tsx` (integrado gerador de histórias)
 - ✅ `src/pages/Import/index.tsx` (fallback proxy)
 - ✅ `vite.config.ts` (cache strategies, aliases)
 - ✅ `.env.example` (limpo)
 - ✅ `POLLINATIONS_INTEGRATION.md` (documentação)
+- ✅ `INTEGRATION_STATUS.md` (atualizado)
 
 ## 🚀 Próximas Integrações Recomendadas
 
 ### Curto Prazo (Quick Wins)
-1. Adicionar assistente em `Reader/index.tsx`
+1. ✅ ~~Adicionar assistente em `Reader/index.tsx`~~ (CONCLUÍDO)
    - Ajuda com vocabulário durante leitura
    - Context: título do texto sendo lido
 
-2. Chat em `Vocabulary/index.tsx`
+2. ✅ ~~Chat em `Vocabulary/index.tsx`~~ (CONCLUÍDO)
    - Exercícios de pronúncia
    - Exemplos de uso
 
-3. Gerador em `Lessons/LessonDetail.tsx`
+3. ✅ ~~Voice input no Review~~ (CONCLUÍDO)
+   - Reconhecimento de voz integrado no ReviewCard
+   - Suporte a pt-BR, es-ES, en-US
+
+4. Gerador em `Lessons/LessonDetail.tsx`
    - Conteúdo dinâmico por tópico
 
 ### Médio Prazo (Enhancements)
-1. Voice input/output
-   - Web Speech API para entrada
-   - TTS para respostas
-
-2. Persistência de chat
+1. Persistência de chat
    - LocalStorage para histórico
    - Sincronização com nuvem
 
-3. Presets de prompts
+2. Presets de prompts
    - Templates por tópico
    - Quick-reply buttons
+
+3. Voice output melhorado
+   - Feedback de pronúncia
+   - Comparação com nativo
 
 ### Longo Prazo (Advanced)
 1. Análise de desempenho

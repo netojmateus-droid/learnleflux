@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
-import { Volume2 } from 'lucide-react';
+import { useMemo, useState, useEffect } from 'react';
+import { Volume2, Mic, MicOff } from 'lucide-react';
 import { VocabEntry } from '@/types';
 import { Button } from '@/components/common/Button';
 import { speak, isSpeechSynthesisSupported } from '@/lib/external/tts';
+import { useVoiceRecognition } from '@/hooks/useVoiceRecognition';
 
 interface ReviewCardProps {
   entry: VocabEntry;
@@ -22,6 +23,27 @@ export function ReviewCard({ entry, index, total, onAnswer }: ReviewCardProps) {
   const [revealed, setRevealed] = useState(false);
   const hasAudio = isSpeechSynthesisSupported();
 
+  const {
+    isListening,
+    transcript,
+    interimTranscript,
+    isSupported: isVoiceSupported,
+    start: startListening,
+    stop: stopListening,
+    reset: resetTranscript,
+  } = useVoiceRecognition({
+    language: entry.lang === 'pt' ? 'pt-BR' : entry.lang === 'es' ? 'es-ES' : 'en-US',
+    continuous: false,
+    interimResults: true,
+  });
+
+  // Update sentence when voice transcript changes
+  useEffect(() => {
+    if (transcript) {
+      setSentence(transcript);
+    }
+  }, [transcript]);
+
   const prompt = useMemo(() => {
     const base = entry.examples?.[0] ?? entry.definition ?? `Crie uma frase usando "${entry.term}"`;
     const regex = new RegExp(entry.term, 'ig');
@@ -38,6 +60,15 @@ export function ReviewCard({ entry, index, total, onAnswer }: ReviewCardProps) {
     onAnswer(score, sentence.trim() || undefined);
     setSentence('');
     setRevealed(false);
+    resetTranscript();
+  };
+
+  const handleToggleVoice = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
   };
 
   return (
@@ -61,11 +92,36 @@ export function ReviewCard({ entry, index, total, onAnswer }: ReviewCardProps) {
       </header>
 
       <textarea
-        value={sentence}
+        value={sentence + (isListening ? interimTranscript : '')}
         onChange={(event) => setSentence(event.target.value)}
         className="focus-ring min-h-[140px] rounded-3xl border border-white/10 bg-white/5 px-4 py-3 text-text-primary"
-        placeholder="Escreva sua frase aqui"
+        placeholder="Escreva sua frase aqui ou use o microfone"
       />
+
+      {isVoiceSupported && (
+        <div className="flex items-center gap-3">
+          <Button
+            intent={isListening ? 'accent' : 'ghost'}
+            onClick={handleToggleVoice}
+            aria-label={isListening ? 'Parar gravação' : 'Começar gravação de voz'}
+          >
+            {isListening ? (
+              <>
+                <MicOff className="mr-2 h-4 w-4" />
+                Parar gravação
+              </>
+            ) : (
+              <>
+                <Mic className="mr-2 h-4 w-4" />
+                Usar voz
+              </>
+            )}
+          </Button>
+          {isListening && (
+            <span className="text-sm text-accent">🎤 Ouvindo...</span>
+          )}
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-3 text-sm text-text-secondary">
         <Button intent="ghost" onClick={() => setRevealed((prev) => !prev)}>
