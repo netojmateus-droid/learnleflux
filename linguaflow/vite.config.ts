@@ -90,4 +90,7 @@ export default defineConfig({
   esbuild: {
     target: 'esnext', // Support top-level await
   },
+  build: {
+    target: 'esnext', // Support top-level await in the build output
+  },
 });
